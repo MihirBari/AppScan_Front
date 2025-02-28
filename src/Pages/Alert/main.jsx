@@ -32,9 +32,7 @@ const Main = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/opportunity/sendAlert`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            }
+            withCredentials:true,
           }
         );
         setAlerts(response.data.products);
@@ -137,6 +135,7 @@ const Main = () => {
         alert_description,
         alert_type,
         License_type,
+        withCredentials:true,
       });
       
       const { id } = response.data; // Assuming the backend returns an object with the id

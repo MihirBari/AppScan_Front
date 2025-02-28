@@ -72,9 +72,7 @@ const navigate = useNavigate();
           {
             signal: signal,
             params: filters,
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true,
           }
         );
         setUsers(response.data.products);

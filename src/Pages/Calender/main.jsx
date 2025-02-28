@@ -31,10 +31,7 @@ const Main = () => {
 
     try {
     await axios.post(`${API_BASE_URL}/api/Holiday/holiday`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${currentUser.accessToken}`
-        }
+      withCredentials:true
       });
      // console.log('File uploaded successfully:', response.data);
       fetchHolidays();
@@ -47,9 +44,7 @@ const Main = () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/Holiday/holidays`,
         {
-          headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`
-          }
+          withCredentials:true
         }
       );
       setHolidays(response.data);
@@ -63,9 +58,7 @@ const Main = () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/Holiday/birthday`,
         {
-          headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`
-          }
+          withCredentials:true
         }
       );
       setBirthdays(Array.isArray(response.data) ? response.data : []);

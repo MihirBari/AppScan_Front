@@ -35,9 +35,7 @@ const EditContact = ({ isOpen, onClose,customerId  }) => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Contact/designation`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true,
           }
         );
 
@@ -59,9 +57,7 @@ const EditContact = ({ isOpen, onClose,customerId  }) => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Contact/showOneContact/${customerId}`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true,
           }
         );
         console.log(customerId)
@@ -96,9 +92,7 @@ const EditContact = ({ isOpen, onClose,customerId  }) => {
     try {
       await axios.put(`${API_BASE_URL}/api/Contact/editContact/${customerId}`, inputs,
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true,
         }
       );
       setInputs(initialInputs);

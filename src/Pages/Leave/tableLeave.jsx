@@ -47,9 +47,7 @@ const Users = () => {
             team: currentUser.team,
           },
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            }
+            withCredentials:true,
           }
         );
         setUsers(response.data.dealers);
@@ -67,9 +65,7 @@ const Users = () => {
   const handleDeleteConfirmation = (itemId) => {
     axios
       .delete(`${API_BASE_URL}/api/Leave/deleteApplication`, { data: { id: itemId },
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        } })
+        withCredentials:true, })
       .then((response) => {
         console.log("Delete successful:", response.data);
         toast.success("Deleted Successfully");

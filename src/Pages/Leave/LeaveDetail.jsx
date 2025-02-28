@@ -49,9 +49,7 @@ const LeaveDetail = ({ product }) => {
   const handleDeleteConfirmation = (itemId) => {
     axios
       .delete(`${API_BASE_URL}/api/Leave/deleteApplication`, { data: { id: itemId },
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        }
+        withCredentials:true,
       })
       .then((response) => {
         console.log("Delete successful:", response.data);
@@ -80,9 +78,7 @@ const LeaveDetail = ({ product }) => {
         history: comment,
         name:name,
         surname:surname,
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        }
+        withCredentials:true,
       })
       .then((response) => {
         toast.success(`Leave application ${newStatus}`);

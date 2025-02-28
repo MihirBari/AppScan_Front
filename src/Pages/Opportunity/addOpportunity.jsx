@@ -37,9 +37,7 @@ const AddOpportunity = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Contact/customerentity`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            }
+            withCredentials:true,
           }
         );
         setCustomerEntities(response.data);
@@ -55,7 +53,8 @@ const AddOpportunity = () => {
     try {
       const response = await axios.post(
         `${API_BASE_URL}/api/Opportunity/name`,
-        { customer_entity: customerEntity }
+        { customer_entity: customerEntity,withCredentials:true },
+        
       );
       setNameOptions(response.data);
     } catch (error) {
@@ -108,9 +107,7 @@ const AddOpportunity = () => {
     try {
       // Send data to backend
       await axios.post(`${API_BASE_URL}/api/Contact/addContact`, inputs, {
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
+        withCredentials:true
       });
       setInputs(initialInputs);
       toast.success("Opportunity created successfully");

@@ -1,47 +1,36 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
 import API_BASE_URL from "../config";
 import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  axios.defaults.withCredentials = true; // Ensure cookies are included in requests
+
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
   const navigate = useNavigate();
 
-  // Helper to auto-logout when token expires
-  const setLogoutTimer = (expirationTime) => {
-    const timeRemaining = expirationTime * 1000 - Date.now();
-    setTimeout(() => {
-      logout();
-    }, timeRemaining);
-  };
-
-  // Check token and set up auto-logout on component mount
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser?.accessToken) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${storedUser.accessToken}`;
-
-      const decodedToken = jwtDecode(storedUser.accessToken);
-      if (decodedToken.exp * 1000 > Date.now()) {
-        setLogoutTimer(decodedToken.exp);
-      } else {
-        logout(); // Immediate logout if token is expired
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/api/user/currentUser`);
+        setCurrentUser(res.data.user);
+        localStorage.setItem("user", JSON.stringify(res.data.user)); // Store user data (without token)
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        localStorage.removeItem("user"); // Remove user from localStorage on error
       }
-    }
+    };
+
+    fetchUser();
 
     const requestInterceptor = axios.interceptors.request.use(
       (config) => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user?.accessToken) {
-          config.headers["Authorization"] = `Bearer ${user.accessToken}`;
-        }
-        return config;
+        return config; // Axios automatically sends the token from cookies
       },
       (error) => Promise.reject(error)
     );
@@ -51,34 +40,11 @@ export const AuthContextProvider = ({ children }) => {
     };
   }, []);
 
-  const handleAuthSuccess = (user, accessToken) => {
-    setCurrentUser(user);
-    localStorage.setItem("user", JSON.stringify({ ...user, accessToken }));
-    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
-    const decodedToken = jwtDecode(accessToken);
-    setLogoutTimer(decodedToken.exp); // Set auto-logout timer on successful login
-  };
-
-  const login = async (credentials) => {
-    try {
-      const res = await axios.post(`${API_BASE_URL}/api/user/login`, credentials);
-      const { accessToken, user } = res.data;
-      handleAuthSuccess(user, accessToken);
-        navigate("/Customer");
-        toast.success("Login successful");      
-    } catch (error) {
-      console.error("Login error:", error);
-      const errorMessage = error.response?.data?.error || "An unexpected error occurred";
-      toast.error(errorMessage);
-    }
-  };
-
   const register = async (userData) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/api/user/addUser`, userData);
-      const { accessToken, user } = res.data;
-      handleAuthSuccess(user, accessToken);
+      setCurrentUser(res.data.user);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // Store user data
       toast.success("Registration successful");
       navigate("/Leave");
     } catch (error) {
@@ -87,12 +53,24 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const login = async (credentials) => {
+    try {
+      const res = await axios.post(`${API_BASE_URL}/api/user/login`, credentials);
+      setCurrentUser(res.data.user);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // Store user data
+      navigate("/Customer");
+      toast.success("Login successful");
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error(error.response?.data?.error || "An unexpected error occurred");
+    }
+  };
+
   const logout = async () => {
     try {
       await axios.get(`${API_BASE_URL}/api/user/logout`);
       setCurrentUser(null);
-      localStorage.removeItem("user");
-      delete axios.defaults.headers.common["Authorization"];
+      localStorage.removeItem("user"); // Remove user data on logout
       navigate("/");
       toast.success("Logout successful");
     } catch (error) {
@@ -102,7 +80,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, register, logout }}>
+    <AuthContext.Provider value={{ currentUser, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

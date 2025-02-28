@@ -43,10 +43,7 @@ const navigate = useNavigate()
       method: "delete",
       url: `${API_BASE_URL}/api/Opportunity/deleteOpportunity`,
       data: { id: itemId }, // Include only the ID in the request payload
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
+      withCredentials:true
     })
       .then((response) => {
         console.log("Delete successful. Deleted order_id:", itemId);

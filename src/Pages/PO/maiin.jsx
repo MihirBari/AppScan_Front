@@ -26,9 +26,7 @@ const Main = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/opportunity/sendPo`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true
           }
         );
         setAlerts(response.data.products);
@@ -83,9 +81,7 @@ const Main = () => {
           License_type,
         },
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
 
@@ -103,9 +99,7 @@ const Main = () => {
         `${API_BASE_URL}/api/opportunity/editedPOopportunity`,
         { id },
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
       if (response.status === 200) {
@@ -123,9 +117,7 @@ const Main = () => {
         `${API_BASE_URL}/api/opportunity/noShowPo`,
         { id },
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
       if (response.status === 200) {
@@ -144,9 +136,7 @@ const Main = () => {
         `${API_BASE_URL}/api/opportunity/revertPO`,
         { id },
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
       if (response.status === 200) {

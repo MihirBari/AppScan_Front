@@ -39,9 +39,7 @@ const EditOpportunityModal = ({ isOpen, onClose }) => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Opportunity/showOneOpportunity/${id}`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            }}
+            withCredentials:true}
         );
         const orderData = response.data[0];
         //console.log("Fetched Order Data:", orderData);
@@ -59,9 +57,7 @@ const EditOpportunityModal = ({ isOpen, onClose }) => {
           try {
             const response = await axios.get(`${API_BASE_URL}/api/Opportunity/product`,
               {
-                headers: {
-                  Authorization: `Bearer ${currentUser.accessToken}`
-                }}
+                hwithCredentials:true}
             );
             setTypeOptions(response.data);
           } catch (error) {
@@ -125,9 +121,7 @@ const EditOpportunityModal = ({ isOpen, onClose }) => {
       const response = await axios.post(
         `${API_BASE_URL}/api/Opportunity/name`,
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`
-          },
+          withCredentials:true,
         customer_entity: customerEntity }
       );
       setNameOptions(response.data);
@@ -149,10 +143,7 @@ const EditOpportunityModal = ({ isOpen, onClose }) => {
         `${API_BASE_URL}/api/Opportunity/editOpportunity/${id}`,
         formData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${currentUser.accessToken}`
-          },
+          withCredentials:true
         }
       );
 

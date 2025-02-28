@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import API_BASE_URL from "../../config";
-import { AuthContext } from "../../context/AuthContext";
 Modal.setAppElement("#root");
+
 const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters,id }) => {
   const [designation, setDesignation] = useState("");
   const [designations, setDesignations] = useState([]);
-  const { currentUser } = useContext(AuthContext)
   const [name, setName] = useState("");
   const [shouldApplyFilters, setShouldApplyFilters] = useState(false);
 
@@ -16,9 +15,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters,id }) => {
       try {
         const response = await axios.get(
           `${API_BASE_URL}/api/contact/designation`,
-          { headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`
-          }}
+          { withCredentials:true,}
         );
         setDesignations(response.data);
        // console.log(response.data);
@@ -40,16 +37,14 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters,id }) => {
             designation,     
             name
           },
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`
-          }
+          withCredentials:true,
         }
       );
 
       onApplyFilters(response.data.products);
       // Update localStorage only if filters are applied successfully
       localStorage.setItem(
-        "expenseFilters",
+        "contactsFilters",
         JSON.stringify({
           
           designation,
@@ -64,7 +59,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters,id }) => {
 
   const retrieveAndSetFilters = async () => {
     // Retrieve filter values from localStorage
-    const storedFilters = localStorage.getItem("expenseFilters");
+    const storedFilters = localStorage.getItem("contactsFilters");
     if (storedFilters) {
       const {
         

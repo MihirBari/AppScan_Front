@@ -88,9 +88,7 @@ const CustomerDetail = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Contact/Contactcustomerentity/${id}`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true,
           }
         );
         setCustomerEntity(response.data[0].customer_entity); // Assuming the API returns the entity as `customer_entity`
@@ -104,9 +102,7 @@ const CustomerDetail = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Contact/showContact/${id}`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true,
           }
         );
         setCustomers(response.data.products);

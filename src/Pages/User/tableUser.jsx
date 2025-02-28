@@ -29,9 +29,7 @@ const Users = () => {
               `${API_BASE_URL}/api/user/userData`,
               {
                 signal: signal,
-                headers: {
-                    Authorization: `Bearer ${currentUser.accessToken}`,
-                  }
+                withCredentials:true,
               }
             );
             setUsers(response.data);
@@ -63,9 +61,7 @@ const Users = () => {
     const handleDeleteConfirmation = () => {
         if (deleteItemId) {
             axios.delete(`${API_BASE_URL}/api/user/delete`, { data: { id: deleteItemId },
-                  headers: {
-                    Authorization: `Bearer ${currentUser.accessToken}`,
-                  }
+                withCredentials:true,
             })
                 .then((response) => {
                     console.log("Delete successful. Deleted user ID:", deleteItemId);

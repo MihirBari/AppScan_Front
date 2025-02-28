@@ -88,9 +88,7 @@ const AddContact = ({ isOpen, onClose, customer_entity }) => {
     try {
       // Send data to backend
       await axios.post(`${API_BASE_URL}/api/Contact/addContact`, inputs, {
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
+        withCredentials:true,
       });
       setInputs(initialInputs);
       toast.success("Contact created successfully");
@@ -136,9 +134,7 @@ const AddContact = ({ isOpen, onClose, customer_entity }) => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Contact/designation`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true,
           }
         );
 

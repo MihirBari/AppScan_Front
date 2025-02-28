@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import API_BASE_URL from "../../config";
 import Select from "react-select";
-import { AuthContext } from "../../context/AuthContext";
-
 Modal.setAppElement("#root");
 
 const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
@@ -15,18 +13,16 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
   const [shouldApplyFilters, setShouldApplyFilters] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const { currentUser } = useContext(AuthContext);
-
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-
     const fetchCityOptions = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/contact/city`, {   headers: {
-             Authorization: `Bearer ${currentUser.accessToken}`
-        },signal });
+        const response = await axios.get(`${API_BASE_URL}/api/contact/city`, {
+          withCredentials: true,
+          signal,
+        });
         setCityOptions(
           response.data.map((city) => ({ value: city.city, label: city.city }))
         );
@@ -43,12 +39,13 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
 
     const fetchCustomerEntities = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/Contact/customerentity`, {
-          headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-          },
-          signal
-        });
+        const response = await axios.get(
+          `${API_BASE_URL}/api/Contact/customerentity`,
+          {
+            withCredentials: true,
+            signal,
+          }
+        );
         setCustomerEntityOptions(
           response.data.map((entity) => ({
             value: entity.customer_entity,
@@ -81,17 +78,18 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
         params.customerEntity = customerEntity;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/api/contact/showCustomer`, {
-        headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`
-        },
-        params
-      });
+      const response = await axios.get(
+        `${API_BASE_URL}/api/contact/showCustomer`,
+        {
+          withCredentials: true,
+          params,
+        }
+      );
 
       onApplyFilters(response.data.products || response.data);
 
       localStorage.setItem(
-        "expenseFilters",
+        "customerFilter",
         JSON.stringify({
           city: city.map((c) => c.value),
           customerEntity,
@@ -103,7 +101,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
   };
 
   const retrieveAndSetFilters = async () => {
-    const storedFilters = localStorage.getItem("expenseFilters");
+    const storedFilters = localStorage.getItem("customerFilter");
     if (storedFilters) {
       const { city: storedCity, customerEntity: storedCustomerEntity } =
         JSON.parse(storedFilters);
@@ -142,7 +140,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
           zIndex: 9999,
         },
         content: {
-          height: "50%", 
+          height: "50%",
           margin: "auto",
         },
       }}

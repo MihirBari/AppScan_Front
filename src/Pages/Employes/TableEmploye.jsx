@@ -46,10 +46,7 @@ const TableEmploye = () => {
       method: "delete",
       url: `${API_BASE_URL}/api/Employes/deleteEmployes`,
       data: { name: deleteItemId.name, surname: deleteItemId.surname },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${currentUser.accessToken}`,
-      },
+      withCredentials:true,
     })
       .then((response) => {
         window.location.reload();
@@ -75,9 +72,7 @@ const TableEmploye = () => {
           {
             params: filters,
             signal: signal,
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            }
+            withCredentials:true,
           }
         );
         setUsers(response.data.products);
@@ -247,10 +242,7 @@ const TableEmploye = () => {
 
     axios
       .post(`${API_BASE_URL}/api/Employes/importExcel`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
+        withCredentials:true,
       })
       .then((response) => {
         console.log("File uploaded successfully:", response.data);

@@ -44,6 +44,7 @@ const SummaryCustomerDetailVeiw = () => {
     axios
       .delete(`${API_BASE_URL}/api/Contact/deleteContact`, {
         data: { id: itemId },
+        withCredentials:true,
       })
       .then((response) => {
         console.log("Delete successful:", response.data);
@@ -88,9 +89,7 @@ useEffect(() => {
       const response = await axios.get(
         `${API_BASE_URL}/api/Contact/summaryContactCustomerentity/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true,
         }
       );
       //console.log(response.data[0].customer_entity)
@@ -105,9 +104,7 @@ useEffect(() => {
       const response = await axios.get(
         `${API_BASE_URL}/api/Contact/showSummaryContact/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true,
         }
       );
       setCustomers(response.data.products);

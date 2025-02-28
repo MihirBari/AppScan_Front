@@ -40,9 +40,7 @@ const AddOpportunity = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Contact/customerentity`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true
           }
         );
         setCustomerEntities(response.data);
@@ -56,9 +54,7 @@ const AddOpportunity = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Opportunity/product`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true
           }
         );
         setTypeOptions(response.data);
@@ -84,9 +80,7 @@ const AddOpportunity = () => {
         `${API_BASE_URL}/api/Opportunity/name`,
         { customer_entity: customerEntity },
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
       setNameOptions(response.data);
@@ -159,9 +153,7 @@ const AddOpportunity = () => {
         `${API_BASE_URL}/api/Opportunity/addOpportunity`,
         inputs,
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
       setInputs(initialInputs);

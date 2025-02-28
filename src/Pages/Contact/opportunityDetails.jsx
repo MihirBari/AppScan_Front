@@ -46,9 +46,7 @@ const OpportunityDetails = ({id}) => {
             `${API_BASE_URL}/api/Contact/showCustomerOpportunity`,
             { id },
             {
-              headers: {
-                Authorization: `Bearer ${currentUser.accessToken}`,
-              },
+              withCredentials:true,
             }
           );
           setUsers(response.data.products);

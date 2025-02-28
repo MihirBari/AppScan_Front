@@ -37,9 +37,7 @@ const EditOpportunity = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/Opportunity/showOneOpportunity/${id}`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            }}
+            withCredentials:true}
         );
         const orderData = response.data[0];
        // console.log("Fetched Order Data:", orderData);
@@ -56,10 +54,7 @@ const EditOpportunity = () => {
         const fetchTypeOptions = async () => {
           try {
             const response = await axios.get(`${API_BASE_URL}/api/Opportunity/product`,
-              {
-                headers: {
-                  Authorization: `Bearer ${currentUser.accessToken}`
-                }}
+              {withCredentials:true}
             );
             setTypeOptions(response.data);
           } catch (error) {
@@ -113,9 +108,7 @@ const EditOpportunity = () => {
       const response = await axios.post(
         `${API_BASE_URL}/api/Opportunity/name`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            },
+            withCredentials:true,
           customer_entity: customerEntity }
       );
       setNameOptions(response.data);
@@ -135,6 +128,7 @@ console.log("Current User Surname:", currentUser.surname);
     try {
       await axios.put(`${API_BASE_URL}/api/Opportunity/editOpportunity/${id}`, {
         ...inputs,
+        withCredentials:true,
         closure_time: inputs.closure_time
           ? new Date(inputs.closure_time).toISOString()
           : null,

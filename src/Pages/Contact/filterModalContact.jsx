@@ -17,9 +17,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters,id }) => {
       try {
         const response = await axios.get(
           `${API_BASE_URL}/api/contact/designation`,
-          { headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`
-          }}
+          { withCredentials:true,}
         );
         setDesignations(response.data);
        // console.log(response.data);
@@ -41,16 +39,14 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters,id }) => {
             designation,     
             name
           },
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`
-          }
+          withCredentials:true,
         }
       );
 
       onApplyFilters(response.data.products);
       // Update localStorage only if filters are applied successfully
       localStorage.setItem(
-        "expenseFilters",
+        "contactFilters",
         JSON.stringify({
           
           designation,
@@ -65,7 +61,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters,id }) => {
 
   const retrieveAndSetFilters = async () => {
     // Retrieve filter values from localStorage
-    const storedFilters = localStorage.getItem("expenseFilters");
+    const storedFilters = localStorage.getItem("contactFilters");
     if (storedFilters) {
       const {
         

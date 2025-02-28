@@ -37,9 +37,7 @@ const MobileLeave = () => {
           {
             role: currentUser.role,
             id: currentUser.id,
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            }
+           withCredentials:true,
           }
         );
        // console.log("API Response:", response.data);

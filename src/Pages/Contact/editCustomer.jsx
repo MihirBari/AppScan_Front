@@ -36,9 +36,7 @@ const EditCustomer = () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Contact/showOneCustomer/${id}`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            }
+            withCredentials:true,
           }
         );
         const sellerData = response.data[0];
@@ -75,9 +73,7 @@ const EditCustomer = () => {
         `${API_BASE_URL}/api/Contact/editCustomer/${id}`,
         inputs, // Send the form data as the second argument
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true,
         }
       );
       setInputs(initialInputs);

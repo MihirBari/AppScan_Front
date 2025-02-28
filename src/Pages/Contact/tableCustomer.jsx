@@ -40,9 +40,7 @@ const TableCustomer = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/contact/showCustomer`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials: true, 
             signal,
           }
         );
@@ -74,9 +72,7 @@ const TableCustomer = () => {
       .delete(`${API_BASE_URL}/api/Contact/deleteCustomer`, {
         data: { id: itemId, 
           customer_entity: customEntity },
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        },
+      withCredentials:true,
       })
       .then((response) => {
         console.log("Delete successful:", response.data);

@@ -21,9 +21,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
         const response = await axios.get(
           `${API_BASE_URL}/api/opportunity/customerEntityAlert`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            }
+            withCredentials:true,
           }
         );
         setCustomerEntitys(response.data);
@@ -37,9 +35,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Opportunity/product`,
            {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            } }
+            withCredentials:true,}
         );
         setTypes(response.data);
       } catch (error) {
@@ -49,7 +45,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
 
     fetchCustomerEntity();
     fetchTypeOptions();
-  }, []);
+  }, [currentUser.accessToken]);
 
   const applyFilters = async () => {
     try {
@@ -61,9 +57,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
             type: type?.map((t) => t.value),
             licenseType: licenseType?.map((l) => l.value),
           }, 
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            }
+            withCredentials:true,
           
         }
       );
@@ -72,7 +66,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
 
       // Update localStorage only if filters are applied successfully
       localStorage.setItem(
-        "expenseFilters",
+        "AlertFliter",
         JSON.stringify({
           customerEntity,
           type,
@@ -86,7 +80,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
 
   const retrieveAndSetFilters = async () => {
     // Retrieve filter values from localStorage
-    const storedFilters = localStorage.getItem("expenseFilters");
+    const storedFilters = localStorage.getItem("AlertFliter");
     if (storedFilters) {
       const {
         customerEntity: storedCustomerEntity,

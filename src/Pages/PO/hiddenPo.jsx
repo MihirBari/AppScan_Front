@@ -24,9 +24,7 @@ const HiddenPo = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/opportunity/showHiddenPo`,
           {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            },
+            withCredentials:true
           }
         );
         setAlerts(response.data.products);
@@ -72,9 +70,7 @@ const HiddenPo = () => {
           License_type,
         },
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
 
@@ -95,9 +91,7 @@ const HiddenPo = () => {
         `${API_BASE_URL}/api/opportunity/revertToPO`,
         { id },
         {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
+          withCredentials:true
         }
       );
       if (response.status === 200) {

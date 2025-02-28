@@ -45,9 +45,7 @@ const EditEmployes = () => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Employes/viewEmployes/${id}`,
-          {headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          }}
+          {withCredentials:true,}
         );
         const employeeData = response.data[0];
         if (employeeData) {

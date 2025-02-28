@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import API_BASE_URL from "../../config";
 import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
 
 const EditUser = () => {
   const navigate = useNavigate();
@@ -18,15 +17,12 @@ const EditUser = () => {
 
   const [inputs, setInputs] = useState(initialInputs);
   const [err, setError] = useState(null);
-  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/user/getOneUserData/${id}`,
-        {  headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          }
+        {  withCredentials:true,
         }
         );
         const userData = response.data[0]; // Access the first element in the array
@@ -60,9 +56,7 @@ const EditUser = () => {
     e.preventDefault();
     try {
       await axios.put(`${API_BASE_URL}/api/user/editUser/${id}`, inputs,
-        {  headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        }
+        {  withCredentials:true,
       }
       );
       setInputs(initialInputs);

@@ -33,9 +33,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
     const fetchCustomerEntities = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Contact/customerentity`, {
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`
-          },
+          withCredentials:true,
          signal });
         setAllCustomerEntities(response.data);
       } catch (err) {
@@ -51,9 +49,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Opportunity/product`,
            {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            } }
+            withCredentials:true}
         );
         setType(response.data);
       } catch (error) {
@@ -86,13 +82,11 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
           startDate: dateFilterType === "between" ? startDate : null,
           endDate: dateFilterType === "between" ? endDate : null,
         },
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`
-          }
+        withCredentials:true
       });
       onApplyFilters(response.data.products);
       localStorage.setItem(
-        "OrderFilters",
+        "OpportunityFilters",
         JSON.stringify({
           customerEntities,
           selectedTypes,
@@ -114,7 +108,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
   };
 
   useEffect(() => {
-    const storedFilters = localStorage.getItem("OrderFilters");
+    const storedFilters = localStorage.getItem("OpportunityFilters");
     if (storedFilters) {
       const {
         customerEntities: storedCustomerEntities,

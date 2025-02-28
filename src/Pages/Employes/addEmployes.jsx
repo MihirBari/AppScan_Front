@@ -68,9 +68,7 @@ const AddEmployes = () => {
   
       // Send data to backend
       await axios.post(`${API_BASE_URL}/api/Employes/addEmployes`, inputs,
-{headers: {
-  Authorization: `Bearer ${currentUser.accessToken}`,
-}}
+{withCredentials:true,}
       );
       setInputs(initialInputs);
       toast.success("Contacts created successfully");

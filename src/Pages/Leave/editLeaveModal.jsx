@@ -30,9 +30,7 @@ export const EditLeaveModal = ({ isOpen, onClose, id }) => {
     const fetchHolidays = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Holiday/holidays`,
-          { headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          }}
+          { withCredentials:true,}
         );
         const formattedHolidays = response.data.map((holiday) => holiday.date.split("T")[0]);
         setHolidays(formattedHolidays);
@@ -82,9 +80,7 @@ export const EditLeaveModal = ({ isOpen, onClose, id }) => {
       try {
         const response = await axios.get(
           `${API_BASE_URL}/api/Leave/showOneApplicationLeave/${id}`,
-          { headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          }}
+          { withCredentials:true,}
         );
         const sellerData = response.data[0];
         console.log("Seller Data:", sellerData);
@@ -137,9 +133,7 @@ export const EditLeaveModal = ({ isOpen, onClose, id }) => {
       await axios.put(
         `${API_BASE_URL}/api/Leave/editApplicationAdmin/${id}`,
         updatedInputs,
-        { headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        }}
+        { withCredentials:true,}
       );
       setInputs(initialInputs);
       toast.success("Updated successfully");

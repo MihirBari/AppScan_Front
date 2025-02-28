@@ -47,14 +47,12 @@ const LeaveTable = () => {
             role: currentUser.role,
             id: currentUser.id,
             signal: signal,
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`,
-            }
+            withCredentials:true,
           }
         );
         // Check for 'dealers' in response data
         if (response.data && Array.isArray(response.data.dealers)) {
-          setRows(response.data.dealers); // use the correct data key
+          setRows(response.data.dealers); // use the correct data keyS
          // setFilteredUsers(response.data.dealers); // use the correct data key
           console.log(response.data.dealers);
         } else {
@@ -84,9 +82,7 @@ const LeaveTable = () => {
   const handleDeleteConfirmation = (itemId) => {
     axios
       .delete(`${API_BASE_URL}/api/Leave/deleteApplication`, { data: { id: itemId },
-        headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        }
+        withCredentials:true,
       })
       .then((response) => {
         console.log("Delete successful:", response.data);

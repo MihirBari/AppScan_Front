@@ -23,9 +23,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
         const response = await axios.get(
           `${API_BASE_URL}/api/opportunity/customerPOEntityAlert`,
           { signal: signal,
-              headers: {
-                Authorization: `Bearer ${currentUser.accessToken}`,
-              }
+            withCredentials:true
             }
         );
         setCustomerEntitys(response.data);
@@ -39,9 +37,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Opportunity/product`,
            {
-            headers: {
-              Authorization: `Bearer ${currentUser.accessToken}`
-            } }
+            withCredentials:true }
         );
         setTypes(response.data);
       } catch (error) {
@@ -67,9 +63,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
             type: type ? type.map((t) => t.value) : [],
             licenseType: licenseType ? licenseType.map((l) => l.value) : [],
           },
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          }
+          withCredentials:true,
         }
       );
   

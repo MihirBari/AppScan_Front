@@ -39,9 +39,7 @@ const AddUser = () => {
     try {
       // Send data to backend
       await axios.post(`${API_BASE_URL}/api/user/addUser`, inputs,
-        {  headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        }
+        { withCredentials:true,
       }
       );
       setInputs(initialInputs);

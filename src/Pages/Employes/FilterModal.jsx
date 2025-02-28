@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Select from "react-select";
 import API_BASE_URL from "../../config";
-import { AuthContext } from "../../context/AuthContext";
 
 Modal.setAppElement("#root");
 
@@ -13,19 +12,14 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters, resetFilters }) => {
   const [selectedNames, setSelectedNames] = useState([]);
   const [selectedSurnames, setSelectedSurnames] = useState([]);
   const [status, setStatus] = useState("Active"); // Initialize status as an empty string
-const { currentUser } = useContext(AuthContext);
+
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
 
     const fetchNames = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/Employes/name`, { signal },{
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
-        });
+        const response = await axios.get(`${API_BASE_URL}/api/Employes/name`, { signal,withCredentials:true, });
         setNames(response.data);
       } catch (err) {
         if (axios.isCancel(err)) {
@@ -38,12 +32,7 @@ const { currentUser } = useContext(AuthContext);
 
     const fetchSurnames = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/Employes/surname`, { signal },{
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
-        });
+        const response = await axios.get(`${API_BASE_URL}/api/Employes/surname`, { signal,withCredentials:true, });
         setSurnames(response.data);
       } catch (err) {
         if (axios.isCancel(err)) {

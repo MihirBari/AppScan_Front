@@ -17,9 +17,7 @@ const Main = () => {
         const restDetailResponse = await axios.post(`${API_BASE_URL}/api/user/RestDetail`, {
           name: currentUser.name,
           surname: currentUser.surname,
-          headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          }
+          withCredentials:true
         });
         setRestDetails(restDetailResponse.data);
 

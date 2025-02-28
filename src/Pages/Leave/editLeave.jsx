@@ -59,9 +59,7 @@ const EditLeave = () => {
       try {
         const response = await axios.get(
           `${API_BASE_URL}/api/Leave/showOneApplicationLeave/${id}`,
-          { headers: {
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          }}
+          { withCredentials:true,}
           
         );
         const sellerData = response.data[0];
@@ -111,9 +109,7 @@ const EditLeave = () => {
       await axios.put(
         `${API_BASE_URL}/api/Leave/editApplicationAdmin/${id}`,
         updatedInputs,
-        { headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
-        }}
+        { withCredentials:true,}
       );
       setInputs(initialInputs);
       toast.success("Updated successfully");
