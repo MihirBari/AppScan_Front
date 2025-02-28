@@ -1,0 +1,58 @@
+.order h1{
+  text-align: center;
+  font-size: 3rem;
+  margin-top: 65px;
+}
+
+
+.header{
+  background-color: rgb(255 255 255 );
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  width: 100%;
+  font-style: bold;
+  color: rgb(17 24 39);
+}
+
+.button{
+  padding: 10px 20px;
+  border: none;
+  background-color: rgb(37 99 235);
+  cursor: pointer;
+  text-align: center;
+  border-radius: 50px;
+  margin: 35px;
+}
+
+
+.dataTable {
+  background-color: rgb(249 250 251 );
+  border: 1px solid rgb(249 250 251 );
+  border-radius: 50px;
+  
+}
+
+
+.dataTable .rdt_TableRow {
+  background-color: rgb(249 250 251 );
+  color: rgb(17, 19, 22);
+}
+
+.dataTable .rdt_TableHead {
+  color: rgb(56, 60, 65);
+  color: rgb(31 41 55 );
+}
+
+.dataTable .rdt_TableRow:hover {
+  background-color: rgb(166, 168, 171);
+}
+
+.centered-button {
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,49 @@
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  padding: 16px;
+}
+
+.sidenav-container {
+  display: flex;
+  position: relative;
+}
+
+.sidenav {
+  width: 72px;
+  background-color: #000000;
+  height: 100vh;
+  padding: 16px;
+  transition: width 0.3s;
+  overflow-x: hidden;
+  z-index: 1000;
+}
+
+.sidenav.open {
+  width: 240px;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  
+  .sidenav {
+    position: absolute;
+    top: 0;
+    left: -240px;
+    transition: left 0.3s;
+    z-index: 1000;
+  }
+  
+  .sidenav.open {
+    left: 0;
+  }
+}
+
+.techsa-logo {
+  width: 100px; /* Set a fixed width */
+  height: auto; /* Maintain aspect ratio */
+}

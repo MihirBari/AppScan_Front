@@ -1,0 +1,90 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.file-upload {
+  margin-top: 20px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.react-calendar {
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.react-calendar__tile {
+  color: black;
+}
+
+.react-calendar__navigation {
+  background-color: #151313;
+  color: black;
+}
+
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+}
+
+.react-calendar__month-view__weekdays {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.react-calendar__tile--active {
+  background-color: #ffeb3b !important;
+  color: black;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background-color: #ffeb3b !important;
+}
+
+.holiday {
+  background-color: #ff5722 !important;
+  color: white !important;
+}
+
+.holiday-details {
+  margin-top: 20px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.holiday {
+  background-color: #ffdddd;
+}
+
+.birthday {
+  background-color: #ddffdd;
+}
